@@ -35,7 +35,7 @@ export function BuyButton({ productId, slug, ctaText }: BuyButtonProps) {
   }
 
   return (
-    <Button size="lg" loading={loading} onClick={handleBuy} className="shrink-0">
+    <Button size="lg" loading={loading} onClick={handleBuy} className="w-full sm:w-auto sm:shrink-0">
       {ctaText}
     </Button>
   )

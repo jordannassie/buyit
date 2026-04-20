@@ -25,13 +25,13 @@ export default async function ProductsPage() {
 
   return (
     <div className="max-w-4xl">
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-black">Products</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-black">Products</h1>
           <p className="text-neutral-500 text-sm mt-1">Your sell pages.</p>
         </div>
-        <Link href="/dashboard/products/new">
-          <Button>+ New Product</Button>
+        <Link href="/dashboard/products/new" className="shrink-0">
+          <Button size="sm">+ New</Button>
         </Link>
       </div>
 
@@ -54,9 +54,9 @@ export default async function ProductsPage() {
           ) : (
             <div className="divide-y divide-neutral-50">
               {products.map((product) => (
-                <div key={product.id} className="px-6 py-4 flex items-center gap-4">
+                <div key={product.id} className="px-4 sm:px-6 py-4 flex items-center gap-3 sm:gap-4">
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
+                    <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                       <p className="text-sm font-semibold text-black truncate">{product.name}</p>
                       <Badge variant={product.published ? 'success' : 'neutral'}>
                         {product.published ? 'Live' : 'Draft'}
@@ -66,19 +66,19 @@ export default async function ProductsPage() {
                       {typeLabel(product.product_type)} · {formatCurrency(product.price_amount, product.currency)}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex items-center gap-1.5 shrink-0">
                     {product.published && (
                       <Link href={`/p/${product.slug}`} target="_blank">
-                        <Button size="sm" variant="ghost">
+                        <Button size="sm" variant="ghost" className="px-2 sm:px-3">
                           <ExternalLink size={13} />
-                          View Page
+                          <span className="hidden sm:inline">View</span>
                         </Button>
                       </Link>
                     )}
                     <Link href={`/dashboard/products/${product.id}`}>
-                      <Button size="sm" variant="secondary">
+                      <Button size="sm" variant="secondary" className="px-2 sm:px-3">
                         <Pencil size={13} />
-                        Edit
+                        <span className="hidden sm:inline">Edit</span>
                       </Button>
                     </Link>
                   </div>

@@ -39,8 +39,8 @@ export default async function DashboardPage() {
 
   return (
     <div className="max-w-4xl">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-black">Overview</h1>
+      <div className="mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-black">Overview</h1>
         <p className="text-neutral-500 text-sm mt-1">Welcome back. Here&apos;s how things are going.</p>
       </div>
 
@@ -77,12 +77,12 @@ export default async function DashboardPage() {
             ) : (
               <div className="divide-y divide-neutral-50">
                 {(orders as Order[]).map((order) => (
-                  <div key={order.id} className="px-6 py-3 flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-neutral-900">{order.buyer_email}</p>
+                  <div key={order.id} className="px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-neutral-900 truncate">{order.buyer_email}</p>
                       <p className="text-xs text-neutral-400">{formatDate(order.created_at)}</p>
                     </div>
-                    <span className="text-sm font-semibold text-black">
+                    <span className="text-sm font-semibold text-black shrink-0">
                       {formatCurrency(order.amount_total, order.currency)}
                     </span>
                   </div>
@@ -111,7 +111,7 @@ export default async function DashboardPage() {
             ) : (
               <div className="divide-y divide-neutral-50">
                 {products.map((product) => (
-                  <div key={product.id} className="px-6 py-3 flex items-center justify-between">
+                  <div key={product.id} className="px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
                     <div>
                       <p className="text-sm font-medium text-neutral-900">{product.name}</p>
                       <p className="text-xs text-neutral-400">

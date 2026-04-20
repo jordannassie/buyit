@@ -8,7 +8,7 @@ export default function BillingPage() {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-black">Billing</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-black">Billing</h1>
         <p className="text-neutral-500 text-sm mt-1">No monthly fee. You only pay when you sell.</p>
       </div>
 
@@ -18,7 +18,7 @@ export default function BillingPage() {
           <CardDescription>Shared when you publish your own product page or storefront.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-4xl font-bold text-black">10% + $0.50 per transaction</p>
+          <p className="text-2xl sm:text-4xl font-bold text-black">10% + $0.50 per transaction</p>
           <p className="text-sm text-neutral-500">
             Includes instant checkout, delivery, receipts, and payout-ready reporting.
           </p>

@@ -11,7 +11,7 @@ function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
 }
 
 function CardHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('px-6 py-5 border-b border-neutral-100', className)} {...props} />
+  return <div className={cn('px-4 py-4 sm:px-6 sm:py-5 border-b border-neutral-100', className)} {...props} />
 }
 
 function CardTitle({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) {
@@ -23,13 +23,13 @@ function CardDescription({ className, ...props }: HTMLAttributes<HTMLParagraphEl
 }
 
 function CardContent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('px-6 py-5', className)} {...props} />
+  return <div className={cn('px-4 py-4 sm:px-6 sm:py-5', className)} {...props} />
 }
 
 function CardFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('px-6 py-4 border-t border-neutral-100 bg-neutral-50 rounded-b-xl', className)}
+      className={cn('px-4 py-3 sm:px-6 sm:py-4 border-t border-neutral-100 bg-neutral-50 rounded-b-xl', className)}
       {...props}
     />
   )

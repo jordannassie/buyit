@@ -19,8 +19,8 @@ export default async function FilesPage() {
 
   return (
     <div className="max-w-3xl">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-black">Files</h1>
+      <div className="mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-black">Files</h1>
         <p className="text-neutral-500 text-sm mt-1">Digital files attached to your products.</p>
       </div>
 
@@ -38,19 +38,17 @@ export default async function FilesPage() {
           ) : (
             <div className="divide-y divide-neutral-50">
               {products.map((product) => (
-                <div key={product.id} className="px-6 py-4 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-neutral-100 rounded-lg flex items-center justify-center">
-                      <FileDown size={16} className="text-neutral-500" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-neutral-900">{product.name}</p>
-                      <p className="text-xs text-neutral-400 font-mono truncate max-w-xs">
-                        {product.file_path?.split('/').pop()}
-                      </p>
-                    </div>
+                <div key={product.id} className="px-4 sm:px-6 py-4 flex items-center gap-3">
+                  <div className="w-9 h-9 bg-neutral-100 rounded-lg flex items-center justify-center shrink-0">
+                    <FileDown size={16} className="text-neutral-500" />
                   </div>
-                  <p className="text-xs text-neutral-400">{formatDate(product.created_at)}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-neutral-900 truncate">{product.name}</p>
+                    <p className="text-xs text-neutral-400 font-mono truncate">
+                      {product.file_path?.split('/').pop()}
+                    </p>
+                  </div>
+                  <p className="text-xs text-neutral-400 shrink-0 hidden sm:block">{formatDate(product.created_at)}</p>
                 </div>
               ))}
             </div>

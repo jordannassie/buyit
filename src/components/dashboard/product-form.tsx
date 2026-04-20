@@ -211,7 +211,7 @@ export function ProductForm({ userId, product, defaultSellerName, defaultSupport
             placeholder="A short description of what buyers get..."
             rows={3}
           />
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Select
               label="Product Type"
               value={productType}
@@ -262,7 +262,7 @@ export function ProductForm({ userId, product, defaultSellerName, defaultSupport
             />
             <div
               onClick={() => thumbnailInputRef.current?.click()}
-              className="border-2 border-dashed border-neutral-200 rounded-lg p-6 text-center cursor-pointer hover:border-neutral-300 transition-colors"
+              className="border-2 border-dashed border-neutral-200 rounded-lg p-4 sm:p-6 text-center cursor-pointer hover:border-neutral-300 transition-colors"
             >
               {thumbnailFile ? (
                 <div className="flex items-center justify-center gap-2 text-sm text-neutral-700">
@@ -304,7 +304,7 @@ export function ProductForm({ userId, product, defaultSellerName, defaultSupport
               />
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-neutral-200 rounded-lg p-6 text-center cursor-pointer hover:border-neutral-300 transition-colors"
+                className="border-2 border-dashed border-neutral-200 rounded-lg p-4 sm:p-6 text-center cursor-pointer hover:border-neutral-300 transition-colors"
               >
                 {productFile ? (
                   <div className="flex items-center justify-center gap-2 text-sm text-neutral-700">
@@ -384,18 +384,18 @@ export function ProductForm({ userId, product, defaultSellerName, defaultSupport
         </CardContent>
       </Card>
 
-      <div className="flex items-center justify-between pt-2">
-        <div className="flex gap-3">
-          <Button type="submit" loading={saving}>
+      <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 pt-2">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button type="submit" loading={saving} className="w-full sm:w-auto">
             {product ? 'Save Changes' : 'Create Product'}
           </Button>
-          <Button type="button" variant="secondary" onClick={() => router.back()}>
+          <Button type="button" variant="secondary" className="w-full sm:w-auto" onClick={() => router.back()}>
             Cancel
           </Button>
         </div>
         {product && (
-          <Button type="button" variant="danger" loading={deleting} onClick={handleDelete}>
-            Delete
+          <Button type="button" variant="danger" loading={deleting} className="w-full sm:w-auto" onClick={handleDelete}>
+            Delete Product
           </Button>
         )}
       </div>

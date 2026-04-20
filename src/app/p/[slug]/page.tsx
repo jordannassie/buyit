@@ -103,7 +103,7 @@ export default async function SellPage({ params }: Props) {
         </div>
 
         {/* Title */}
-        <h1 className="text-3xl font-bold text-black mb-3 leading-tight">{product.name}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-black mb-3 leading-tight">{product.name}</h1>
 
         {/* Description */}
         {product.description && (
@@ -117,7 +117,7 @@ export default async function SellPage({ params }: Props) {
         </div>
 
         {/* Price + CTA */}
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <span className="text-3xl font-bold text-black">
               {formatCurrency(product.price_amount, product.currency)}

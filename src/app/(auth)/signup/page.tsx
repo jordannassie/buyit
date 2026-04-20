@@ -44,7 +44,7 @@ export default function SignupPage() {
   if (success) {
     return (
       <div className="w-full max-w-sm">
-        <div className="bg-white border border-neutral-200 rounded-2xl p-8 shadow-sm text-center">
+        <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 shadow-sm text-center">
           <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -64,7 +64,7 @@ export default function SignupPage() {
 
   return (
     <div className="w-full max-w-sm">
-      <div className="bg-white border border-neutral-200 rounded-2xl p-8 shadow-sm">
+      <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 shadow-sm">
         <div className="text-center mb-7">
           <h1 className="text-xl font-bold text-black">Create your account</h1>
           <p className="text-sm text-neutral-500 mt-1">Start selling in minutes. Free to try.</p>

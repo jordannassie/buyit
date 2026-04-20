@@ -34,7 +34,7 @@ export default function LoginPage() {
 
   return (
     <div className="w-full max-w-sm">
-      <div className="bg-white border border-neutral-200 rounded-2xl p-8 shadow-sm">
+      <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 shadow-sm">
         <div className="text-center mb-7">
           <h1 className="text-xl font-bold text-black">Welcome back</h1>
           <p className="text-sm text-neutral-500 mt-1">Log in to your Selli account</p>

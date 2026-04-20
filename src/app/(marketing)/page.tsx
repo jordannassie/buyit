@@ -145,7 +145,7 @@ export default function HomePage() {
               No monthly fees. Only pay when you sell.
             </p>
           </div>
-          <div className="bg-white border border-neutral-200 rounded-3xl p-8 space-y-4">
+          <div className="bg-white border border-neutral-200 rounded-3xl p-5 sm:p-8 space-y-4">
             <p className="text-sm text-neutral-500 uppercase tracking-wide">Direct sales</p>
             <p className="text-4xl sm:text-5xl font-bold text-black">
               10% + $0.50 per direct sale
