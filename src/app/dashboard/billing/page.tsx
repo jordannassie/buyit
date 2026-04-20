@@ -1,108 +1,65 @@
-import { createClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { PLANS } from '@/lib/stripe'
-import { Check, ExternalLink } from 'lucide-react'
-import { BillingButtons } from './billing-buttons'
+import { Check } from 'lucide-react'
 
 export const metadata = { title: 'Billing — Selli' }
 
-export default async function BillingPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('stripe_subscription_status, stripe_price_id, stripe_customer_id')
-    .eq('id', user!.id)
-    .single()
-
-  const currentPriceId = profile?.stripe_price_id
-  const subscriptionStatus = profile?.stripe_subscription_status
-  const isActive = subscriptionStatus === 'active' || subscriptionStatus === 'trialing'
-
-  function getCurrentPlan() {
-    if (currentPriceId === process.env.NEXT_PUBLIC_STRIPE_STARTER_PRICE_ID) return 'starter'
-    if (currentPriceId === process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID) return 'pro'
-    return null
-  }
-
-  const currentPlan = getCurrentPlan()
-
+export default function BillingPage() {
   return (
-    <div className="max-w-3xl">
-      <div className="mb-8">
+    <div className="max-w-3xl space-y-6">
+      <div>
         <h1 className="text-2xl font-bold text-black">Billing</h1>
-        <p className="text-neutral-500 text-sm mt-1">Manage your Selli subscription.</p>
+        <p className="text-neutral-500 text-sm mt-1">No monthly fee. You only pay when you sell.</p>
       </div>
 
-      {/* Current plan status */}
-      <Card className="mb-6">
+      <Card>
         <CardHeader>
-          <CardTitle>Current Plan</CardTitle>
-          <CardDescription>Your active subscription status.</CardDescription>
+          <CardTitle>Direct sales fee</CardTitle>
+          <CardDescription>Shared when you publish your own product page or storefront.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-semibold text-black capitalize">
-                {currentPlan ? PLANS[currentPlan].name : 'No active plan'}
-              </p>
-              <p className="text-sm text-neutral-500 mt-0.5">
-                {currentPlan
-                  ? `$${PLANS[currentPlan].price / 100}/month`
-                  : 'Subscribe to start selling'}
-              </p>
-            </div>
-            <Badge variant={isActive ? 'success' : 'neutral'}>
-              {subscriptionStatus ?? 'inactive'}
-            </Badge>
-          </div>
-          {isActive && profile?.stripe_customer_id && (
-            <div className="mt-4 pt-4 border-t border-neutral-100">
-              <BillingButtons hasCustomer={true} />
-            </div>
-          )}
+        <CardContent className="space-y-4">
+          <p className="text-4xl font-bold text-black">10% + $0.50 per transaction</p>
+          <p className="text-sm text-neutral-500">
+            Includes instant checkout, delivery, receipts, and payout-ready reporting.
+          </p>
+          <ul className="space-y-2 text-sm text-neutral-600">
+            {['No monthly subscription', 'Simple selling, simple pricing', 'Built for downloads, services, and subscriptions'].map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <Check size={14} className="text-black flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p className="text-xs text-neutral-400">
+            Payment processing fees may apply separately.
+          </p>
         </CardContent>
       </Card>
 
-      {/* Plans */}
-      <div className="grid sm:grid-cols-2 gap-4">
-        {Object.entries(PLANS).map(([key, plan]) => {
-          const isCurrentPlan = currentPlan === key && isActive
-          return (
-            <Card key={key} className={isCurrentPlan ? 'ring-2 ring-black' : ''}>
-              <CardContent className="pt-6">
-                {isCurrentPlan && (
-                  <span className="text-xs bg-black text-white px-2 py-0.5 rounded-md font-medium mb-3 inline-block">
-                    Current Plan
-                  </span>
-                )}
-                <p className="text-sm font-medium text-neutral-500">{plan.name}</p>
-                <div className="flex items-baseline gap-1 mt-1 mb-4">
-                  <span className="text-3xl font-bold text-black">${plan.price / 100}</span>
-                  <span className="text-neutral-400 text-sm">/mo</span>
-                </div>
-                <ul className="space-y-2 mb-5">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-neutral-600">
-                      <Check size={13} className="text-black flex-shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                {!isCurrentPlan && (
-                  <BillingButtons
-                    hasCustomer={false}
-                    priceId={plan.priceId}
-                    planName={plan.name}
-                  />
-                )}
-              </CardContent>
-            </Card>
-          )
-        })}
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Discover marketplace (future)</CardTitle>
+          <CardDescription>Only when Selli brings the buyer.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <p className="text-2xl font-semibold text-black">30% per transaction</p>
+          <p className="text-sm text-neutral-500">
+            We’ll only take this fee when a customer discovers your work through Selli’s future marketplace. The 10% + $0.50 direct fee still applies when you share links yourself.
+          </p>
+          <Badge variant="neutral">Discover fees not live yet</Badge>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Future-ready payout + tax settings</CardTitle>
+          <CardDescription>Coming soon.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-2 text-sm text-neutral-600">
+          <p>Connect your payout account and track tax settings effortlessly.</p>
+          <p>The billing portal will let you review past transactions and fees.</p>
+        </CardContent>
+      </Card>
     </div>
   )
 }

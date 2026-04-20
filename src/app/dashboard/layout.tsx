@@ -20,8 +20,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <div className="flex min-h-screen bg-neutral-50">
       <DashboardSidebar />
-      <div className="flex-1 flex flex-col min-w-0">
-        <main className="flex-1 p-6 lg:p-8">
+      {/* pt-14 offsets the mobile fixed top bar; removed on lg where sidebar takes over */}
+      <div className="flex-1 flex flex-col min-w-0 pt-14 lg:pt-0">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
           {children}
         </main>
       </div>
