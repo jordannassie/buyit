@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -10,8 +10,8 @@ import { Select } from '@/components/ui/select'
 import { Toggle } from '@/components/ui/toggle'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'sonner'
-import { slugify } from '@/lib/utils'
-import { Upload, X, ExternalLink } from 'lucide-react'
+import { slugify, cn } from '@/lib/utils'
+import { Upload, X, ExternalLink, Plus, UserCircle, ShoppingBag } from 'lucide-react'
 import type { Product, ProductType } from '@/types'
 import Link from 'next/link'
 
@@ -55,6 +55,17 @@ export function ProductForm({ userId, product, defaultSellerName, defaultSupport
   const [productFile, setProductFile] = useState<File | null>(null)
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [dirty, setDirty] = useState(false)
+
+  // Track dirty state — skip first render (initial field population)
+  const isFirstRender = useRef(true)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    setDirty(true)
+  }, [name, description, productType, price, slug, ctaText, sellerName, supportEmail, externalLink, published, thumbnailFile, productFile])
 
   function handleNameChange(val: string) {
     setName(val)
@@ -164,6 +175,7 @@ export function ProductForm({ userId, product, defaultSellerName, defaultSupport
         toast.error(error.message)
       } else {
         toast.success(product ? 'Product updated.' : 'Product created.')
+        setDirty(false)
         router.push('/dashboard/products')
         router.refresh()
       }
@@ -191,7 +203,45 @@ export function ProductForm({ userId, product, defaultSellerName, defaultSupport
   }
 
   return (
-    <form onSubmit={handleSave} className="space-y-5">
+    <form
+      onSubmit={handleSave}
+      className={cn('space-y-5', product && dirty && 'pb-24 sm:pb-0')}
+    >
+      {/* ── Mobile quick actions (editing only) ──────────────────────── */}
+      {product && (
+        <div className="sm:hidden grid grid-cols-4 gap-2">
+          <Link
+            href="/dashboard/settings"
+            className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-white border border-neutral-100 text-center hover:bg-neutral-50 transition-colors"
+          >
+            <UserCircle size={18} className="text-neutral-500" />
+            <span className="text-[10px] text-neutral-500 leading-tight">Edit Profile</span>
+          </Link>
+          <Link
+            href="/dashboard/products/new"
+            className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-white border border-neutral-100 text-center hover:bg-neutral-50 transition-colors"
+          >
+            <Plus size={18} className="text-neutral-500" />
+            <span className="text-[10px] text-neutral-500 leading-tight">Add Product</span>
+          </Link>
+          <Link
+            href="/dashboard/orders"
+            className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-white border border-neutral-100 text-center hover:bg-neutral-50 transition-colors"
+          >
+            <ShoppingBag size={18} className="text-neutral-500" />
+            <span className="text-[10px] text-neutral-500 leading-tight">Orders</span>
+          </Link>
+          <Link
+            href={product.slug ? `/p/${product.slug}` : '/dashboard/products'}
+            target={product.slug ? '_blank' : undefined}
+            className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-white border border-neutral-100 text-center hover:bg-neutral-50 transition-colors"
+          >
+            <ExternalLink size={18} className="text-neutral-500" />
+            <span className="text-[10px] text-neutral-500 leading-tight">Preview</span>
+          </Link>
+        </div>
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle>Product Details</CardTitle>
@@ -399,6 +449,25 @@ export function ProductForm({ userId, product, defaultSellerName, defaultSupport
           </Button>
         )}
       </div>
+
+      {/* ── Mobile sticky save bar — appears when there are unsaved changes ── */}
+      {product && dirty && (
+        <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-neutral-200 px-4 py-3 shadow-lg">
+          <div className="flex gap-3">
+            <Button type="submit" loading={saving} className="flex-1">
+              Save Changes
+            </Button>
+            {product.slug && (
+              <Link href={`/p/${product.slug}`} target="_blank">
+                <Button type="button" variant="secondary" className="gap-1.5 px-3 shrink-0">
+                  <ExternalLink size={14} />
+                  Preview
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </form>
   )
 }

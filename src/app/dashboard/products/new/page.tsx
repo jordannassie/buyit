@@ -35,9 +35,9 @@ export default async function NewProductPage() {
 
   return (
     <div className="max-w-2xl">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-black">New Product</h1>
-        <p className="text-neutral-500 text-sm mt-1">Create your sell page.</p>
+      <div className="mb-4 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl font-bold text-black">New Product</h1>
+        <p className="text-neutral-500 text-sm mt-0.5">Create your sell page.</p>
       </div>
       <ProductForm
         userId={user!.id}
